@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Calculadora Simples Nacional</title>
+</head>
+
+<style>
+    *{
+        background-color: rgb(36, 6, 72);
+        color:aliceblue;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+</style>
+
+<body>
+
+<center>
+<h1>
+CALCULADORA SIMPLES NACIONAL
+</h1>
+</center>
+
+<br>
+
+<center>
+<input id="rbt12" type="number" placeholder="RBT12"
+style="width:300px;border-radius:10px; height: 50px; background-color: aliceblue; color:black">
+</center>
+
+<br>
+
+<center>
+<input id="receitaMes" type="number" placeholder="Receita do mês"
+style="width:300px;border-radius:10px; height: 50px; background-color: aliceblue; color:black">
+</center>
+
+<br>
+
+<center>
+<select id="anexo" style="width: 300px; border-radius: 10px; height: 50px; background-color: aliceblue; color:black">
+<option value="1">ANEXO I - Comércio</option>
+<option value="2">ANEXO II - Indústria</option>
+<option value="3">ANEXO III - Serviços</option>
+</select>
+</center>
+
+<br>
+
+<center>
+<button onclick="calcular()">Calcular DAS</button>
+</center>
+
+<br>
+
+<center>
+<h2 id="resultado"></h2>
+</center>
+
+<script>
+
+function calcular(){
+
+let rbt12 = parseFloat(document.getElementById("rbt12").value)
+let receitaMes = parseFloat(document.getElementById("receitaMes").value)
+let anexo = document.getElementById("anexo").value
+
+let aliquota = 0
+let deducao = 0
+
+// ANEXO I
+if(anexo == 1){
+
+if(rbt12 <= 180000){aliquota=0.04;deducao=0}
+else if(rbt12 <= 360000){aliquota=0.073;deducao=5940}
+else if(rbt12 <= 720000){aliquota=0.095;deducao=13860}
+else if(rbt12 <= 1800000){aliquota=0.107;deducao=22500}
+else if(rbt12 <= 3600000){aliquota=0.143;deducao=87300}
+else {aliquota=0.19;deducao=378000}
+
+}
+
+// ANEXO II
+if(anexo == 2){
+
+if(rbt12 <= 180000){aliquota=0.045;deducao=0}
+else if(rbt12 <= 360000){aliquota=0.078;deducao=5940}
+else if(rbt12 <= 720000){aliquota=0.10;deducao=13860}
+else if(rbt12 <= 1800000){aliquota=0.112;deducao=22500}
+else if(rbt12 <= 3600000){aliquota=0.147;deducao=85500}
+else {aliquota=0.30;deducao=720000}
+
+}
+
+// ANEXO III
+if(anexo == 3){
+
+if(rbt12 <= 180000){aliquota=0.06;deducao=0}
+else if(rbt12 <= 360000){aliquota=0.112;deducao=9360}
+else if(rbt12 <= 720000){aliquota=0.135;deducao=17640}
+else if(rbt12 <= 1800000){aliquota=0.16;deducao=35640}
+else if(rbt12 <= 3600000){aliquota=0.21;deducao=125640}
+else {aliquota=0.33;deducao=648000}
+
+}
+
+let aliquotaEfetiva = ((rbt12 * aliquota) - deducao) / rbt12
+
+let das = receitaMes * aliquotaEfetiva
+
+document.getElementById("resultado").innerHTML =
+"DAS aproximado: R$ " + das.toFixed(2)
+
+}
+
+</script>
+
+</body>
+</html>
